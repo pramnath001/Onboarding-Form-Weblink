@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EDI Onboarding Form - NMB Minebea GmbH</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      padding: 20px;
+      color: #003399;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      border: 2px solid #003399;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      max-height: 80px;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    label {
+      font-weight: bold;
+    }
+    button {
+      background-color: #003399;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .box {
+      border: 2px solid #003399;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      background: #f9fbff;
+    }
+    .box h2 {
+      margin-top: 0;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    .success {
+      color: green;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="download.png" alt="NMB Minebea GmbH Logo" />
+    </div>
+    <h1>EDI Onboarding Form</h1>
+
+    <div class="box">
+      <h2>NMB Contact Information</h2>
+      <p><strong>Company:</strong> NMB-Minebea-GmbH</p>
+      <p><strong>Address:</strong> Siemensstraße 30, 63225 Langen, Germany</p>
+      <p><strong>Contact 1:</strong> Genevieve Llaban | Tel: +49 (0) 6103 913 127</p>
+      <p><strong>Contact 2:</strong> BSD EDI Support Team | Tel: +49 (0) 6103 913 156</p>
+      <p><strong>Email:</strong> <a href="mailto:bsd_edisupport@nmb-minebea.com">bsd_edisupport@nmb-minebea.com</a></p>
+    </div>
+
+    <form id="ediForm">
+      <div class="box">
+        <h2>Trading Partner Details</h2>
+        <label>Company Name *</label>
+        <input type="text" name="companyName" required />
+        <label>EDI Contact Person Name *</label>
+        <input type="text" name="contactName" required />
+        <label>EDI Contact Email Address *</label>
+        <input type="email" name="email" required />
+        <label>EDI Contact Phone Number *</label>
+        <input type="tel" name="phone" />
+      </div>
+
+      <div class="box">
+        <h2>EDI Message Types & Versions</h2>
+        <div id="messageTypeContainer">
+          <select name="messageTypes" class="messageTypeSelect" onchange="toggleOtherInput(this, 'otherMessageTypesBox')">
+            <option value="">Select</option>
+            <option value="DELFOR 96A">DELFOR 96A</option>
+            <option value="DELFOR 97A">DELFOR 97A</option>
+            <option value="DELFOR 99B">DELFOR 99B</option>
+            <option value="VDA 4905">VDA 4905</option>
+            <option value="VDA 4913">VDA 4913</option>
+            <option value="VDA 4915">VDA 4915</option>
+            <option value="DELINS">DELINS</option>
+            <option value="ORDERS 97A">ORDERS 97A</option>
+            <option value="DESADV">DESADV</option>
+            <option value="IFTMAN">IFTMAN</option>
+            <option value="IFTMBF">IFTMBF</option>
+            <option value="IFTMCS">IFTMCS</option>
+            <option value="IFTMIN">IFTMIN</option>
+            <option value="ORDRSP">ORDRSP</option>
+            <option value="INVOIC">INVOIC</option>
+            <option value="830">830</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <button type="button" onclick="addMessageType()">+ Add Another Message Type</button>
+        <div id="otherMessageTypesBox" style="display:none;">
+          <label>Other Message Types</label>
+          <input type="text" name="otherMessageTypes" />
+        </div>
+      </div>
+
+      <div class="box">
+        <h2>Preferred Communication Protocol(s)</h2>
+        <div id="protocolContainer">
+          <select name="protocol" class="protocolSelect" onchange="toggleOtherInput(this, 'otherProtocolBox')">
+            <option value="">Select</option>
+            <option value="OFTP2">OFTP2</option>
+            <option value="VAN">VAN</option>
+            <option value="SFTP">SFTP</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <button type="button" onclick="const c = document.querySelector('.protocolSelect').cloneNode(true); c.value=''; document.getElementById('protocolContainer').appendChild(c);">+ Add Another Protocol</button>
+        <div id="otherProtocolBox" style="display:none;">
+          <label>Other Communication Protocol</label>
+          <input type="text" name="otherProtocol" />
+        </div>
+      </div>
+
+      <label>VAN/OFTP ID/SFTP OR OTHER</label>
+      <input type="text" name="identifier" />
+
+      <label>Do you need testing?</label>
+      <select name="testing">
+        <option value="">Select</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="Partially">Partially</option>
+      </select>
+
+      <div class="box">
+        <h2>Project Details & Timeline</h2>
+        <p>Please provide the following details to help us plan and coordinate the EDI onboarding process effectively:</p>
+        <label>Target Date for EDI Availability</label>
+        <input type="text" name="ediAvailableDate" />
+        <label>Estimated EDI Transaction Volume (per week)</label>
+        <input type="text" name="transactionVolume" />
+        <label>NMB Sales Contact</label>
+        <input type="text" name="nmbSalesperson" />
+        <label>NMB Customer Service Contact</label>
+        <input type="text" name="nmbCustomerService" />
+        <label>NMB Business Unit</label>
+        <input type="text" name="businessUnit" />
+        <p style="color: #cc0000;"><em>⚠️ Please be informed that the current lead time for EDI setup and activation on our side is approximately <strong>2 months</strong>.</em></p>
+      </div>
+
+      <div class="box">
+        <h2>Additional Notes or Questions</h2>
+        <textarea name="notes"></textarea>
+      </div>
+
+      <button type="submit">Submit</button>
+      <p id="successMsg" class="success" style="display:none;">✅ Your form has been submitted successfully!</p>
+    </form>
+  </div>
+
+<script>
+function addMessageType() {
+  const container = document.getElementById('messageTypeContainer');
+  const clone = document.querySelector('.messageTypeSelect').cloneNode(true);
+  clone.value = '';
+  container.appendChild(clone);
+}
+function toggleOtherInput(selectEl, otherInputId) {
+  const show = selectEl.value === 'Other';
+  document.getElementById(otherInputId).style.display = show ? 'block' : 'none';
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("Ov3L__c13RPBi6e23");
+  })();
+
+  document.getElementById('ediForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = this;
+    const formData = {
+      companyName: form.companyName.value,
+      contactName: form.contactName.value,
+      email: form.email.value,
+      phone: form.phone.value,
+      identifier: form.identifier.value,
+      testing: form.testing.value,
+      ediAvailableDate: form.ediAvailableDate.value,
+      transactionVolume: form.transactionVolume.value,
+      nmbSalesperson: form.nmbSalesperson.value,
+      nmbCustomerService: form.nmbCustomerService.value,
+      businessUnit: form.businessUnit.value,
+      notes: form.notes.value,
+      otherProtocol: form.otherProtocol?.value || "",
+      otherMessageTypes: form.otherMessageTypes?.value || ""
+    };
+
+    formData.messageTypes = Array.from(document.querySelectorAll('.messageTypeSelect')).map(el => el.value).join(', ');
+    formData.protocol = Array.from(document.querySelectorAll('.protocolSelect')).map(el => el.value).join(', ');
+
+    emailjs.send("service_8ooocnu", "template_dufnere", formData)
+      .then(function(response) {
+        document.getElementById('successMsg').style.display = 'block';
+        form.reset();
+
+        document.querySelectorAll('.messageTypeSelect').forEach((el, i) => { if (i > 0) el.remove(); });
+        document.querySelectorAll('.protocolSelect').forEach((el, i) => { if (i > 0) el.remove(); });
+
+        document.getElementById("otherMessageTypesBox").style.display = "none";
+        document.getElementById("otherProtocolBox").style.display = "none";
+
+        setTimeout(() => {
+          document.getElementById('successMsg').style.display = 'none';
+        }, 5000);
+      }, function(error) {
+        alert("Email send failed. Please try again.\\n" + JSON.stringify(error));
+      });
+  });
+</script>
+</body>
+</html>
